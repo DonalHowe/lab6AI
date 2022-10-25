@@ -13,7 +13,13 @@ class Cell
 	double m_Gcost;
 	bool m_traversable = true;
 	int m_costDistance;
+	int prevNeighbour;
+	bool m_marked = false;
 public:
+	bool getMarked();
+	void setMarked(bool t_marked);
+	int getPrevNeighbour();
+	void setPrevNeighbour(int t_prev);
 	void setStartColour();
 	void setEndColour();
 	int getCostDistance();

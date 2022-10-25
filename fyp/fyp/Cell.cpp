@@ -5,10 +5,36 @@ void Cell::setStartColour()
     m_rect.setFillColor(sf::Color::Blue);
 }
 
+int Cell::getPrevNeighbour()
+{
+    return prevNeighbour;
+}
+
+bool Cell::getMarked()
+{
+    return m_marked;
+}
+
+
+void Cell::setMarked(bool t_marked)
+{
+    m_marked = t_marked;
+}
+
+
+
+void Cell::setPrevNeighbour(int t_prev)
+{
+    prevNeighbour = t_prev;
+}
+
+
 void Cell::setEndColour()
 {
     m_rect.setFillColor(sf::Color::Black);
 }
+
+
 
 int Cell::getCostDistance()
 {
