@@ -5,10 +5,7 @@ void Cell::setStartColour()
     m_rect.setFillColor(sf::Color::Blue);
 }
 
-int Cell::getPrevNeighbour()
-{
-    return prevNeighbour;
-}
+
 
 bool Cell::getMarked()
 {
@@ -19,13 +16,6 @@ bool Cell::getMarked()
 void Cell::setMarked(bool t_marked)
 {
     m_marked = t_marked;
-}
-
-
-
-void Cell::setPrevNeighbour(int t_prev)
-{
-    prevNeighbour = t_prev;
 }
 
 
@@ -46,14 +36,36 @@ void Cell::setCostDistance(int t_cost)
     m_costDistance = t_cost;
 }
 
+bool Cell::getEndPoint()
+{
+    return m_isEndoint;
+}
+
 int Cell::getID()
 {
     return m_ID;
 }
 
+bool Cell::getStartPoint()
+{
+    return m_isStartoint;
+}
+
+void Cell::setEndPoint(bool t_)
+{
+    m_isEndoint = t_;
+    std::cout << "end point set" << std::endl;
+}
+
 void Cell::setTraversable(bool t_traversable)
 {
     m_traversable = t_traversable;
+}
+
+void Cell::setStartPoint(bool t_et)
+{
+    m_isStartoint = t_et;
+    std::cout << "start point set" << std::endl;
 }
 
 bool Cell::getTraversable()
@@ -102,4 +114,10 @@ void Cell::initRect()
     m_rect.setOutlineColor(sf::Color::Black);
     m_rect.setOutlineThickness(1.5f);
     m_rect.setSize(sf::Vector2f{ ScreenSize::M_WIDTH / 50,ScreenSize::M_HEIGHT / 50 });
+}
+
+void Cell::setNeighbours(Cell* t_neighbour)
+{
+    t_neighbour->setEndColour();
+    m_neighbour.push_back(t_neighbour);
 }
