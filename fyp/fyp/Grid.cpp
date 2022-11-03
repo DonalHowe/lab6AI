@@ -19,29 +19,34 @@ Grid::~Grid()
 
 void Grid::createHeatMap(Cell* t_startCell, Cell* t_endpoint)
 {
-	std::cout << "big map" << std::endl;
+	for (int i = 0; i < MAX_CELLS; i++)
+	{
+		Cell* v = atIndex(i);
+		v->setCostDistance((abs(t_endpoint->xPos - v->xPos) + abs(t_endpoint->yPos - v->yPos)));
+	}
+	m_theTableVector;
 	heatMapCreated = true;
 }
 
 void Grid::setIntraversable()
 {
-	int random;
-	Cell* tempNode;
-	std::srand(std::time(nullptr));
-	
-	for (int i = 0; i < 300; i++)
-	{
-		random = rand() % (2499 + 1);
-		tempNode = atIndex(random);
-		tempNode->setTraversable(false);
-		if (tempNode->getTraversable() == false)
-		{
-			random = rand() % (2499 + 1);
-			tempNode = atIndex(random);
-			tempNode->setTraversable(false);
-		}
-		
-	}
+	//int random;
+	//Cell* tempNode;
+	//std::srand(std::time(nullptr));
+	//
+	//for (int i = 0; i < 300; i++)
+	//{
+	//	random = rand() % (2499 + 1);
+	//	tempNode = atIndex(random);
+	//	tempNode->setTraversable(false);
+	//	if (tempNode->getTraversable() == false)
+	//	{
+	//		random = rand() % (2499 + 1);
+	//		tempNode = atIndex(random);
+	//		tempNode->setTraversable(false);
+	//	}
+	//	
+	//}
 
 		
 }
@@ -118,6 +123,7 @@ void Grid::selectStartEndPos(sf::RenderWindow & t_window)
 		endCell = atIndex(endId);
 		createHeatMap(StartCell, endCell);
 	}
+
 
 }
 
