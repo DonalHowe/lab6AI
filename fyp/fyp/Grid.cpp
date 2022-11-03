@@ -17,10 +17,14 @@ Grid::~Grid()
 {
 }
 
+void Grid::createHeatMap(Cell* t_startCell, Cell* t_endpoint)
+{
+	std::cout << "big map" << std::endl;
+	heatMapCreated = true;
+}
+
 void Grid::setIntraversable()
 {
-	
-	
 	int random;
 	Cell* tempNode;
 	std::srand(std::time(nullptr));
@@ -37,8 +41,6 @@ void Grid::setIntraversable()
 			tempNode->setTraversable(false);
 		}
 		
-		
-		std::cout << std::to_string(random) << std::endl;
 	}
 
 		
@@ -71,7 +73,7 @@ void Grid::selectStartEndPos(sf::RenderWindow & t_window)
 {
 	const  sf::RenderWindow& m_window = t_window;
 	sf::Vector2f m_MousePos = sf::Vector2f{ sf::Mouse::getPosition(m_window) };
-
+	
 	for (int i = 0; i < MAX_ROWS; i++)
 	{
 		for (int j = 0; j < MAX_COLS; j++)
@@ -79,12 +81,13 @@ void Grid::selectStartEndPos(sf::RenderWindow & t_window)
 			if (m_theTableVector.at(i).at(j).getRect().getGlobalBounds().contains(m_MousePos))
 			{
 				if (m_startPosChosen == false)
-						{
+				{
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					{
 						std::cout << m_theTableVector.at(i).at(j).getID() << std::endl;
 						m_theTableVector.at(i).at(j).setStartColour();
 						m_theTableVector.at(i).at(j).setStartPoint(true);
+						startId=	m_theTableVector.at(i).at(j).getID();
 						m_startPosChosen = true;
 
 					}
@@ -97,6 +100,7 @@ void Grid::selectStartEndPos(sf::RenderWindow & t_window)
 						std::cout << m_theTableVector.at(i).at(j).getID() << std::endl;
 						m_theTableVector.at(i).at(j).setEndColour();
 						m_theTableVector.at(i).at(j).setEndPoint(true);
+						endId = m_theTableVector.at(i).at(j).getID();
 						m_endPosChosen = true;
 					}
 
@@ -105,6 +109,14 @@ void Grid::selectStartEndPos(sf::RenderWindow & t_window)
 			}
 			
 		}
+	}
+	if (m_endPosChosen == true && m_startPosChosen == true&&heatMapCreated==false)
+	{
+		Cell* endCell;
+		Cell* StartCell;
+		StartCell = atIndex(startId);
+		endCell = atIndex(endId);
+		createHeatMap(StartCell, endCell);
 	}
 
 }
@@ -145,9 +157,9 @@ void Grid::setupGrid()
 	m_theTableVector;
 	int i = 0;
 	
-		setIntraversable();
+	setIntraversable();
 	
-	
+
 }
 
 void Grid::render(sf::RenderWindow& t_window)

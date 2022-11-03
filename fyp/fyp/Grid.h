@@ -18,11 +18,14 @@ class Grid
 	bool m_endPosChosen = false;
 	const static int MAX_ROWS=50;
 	const static int MAX_COLS=50;
-
+	int endId;
+	int startId;
 	Cell *atIndex(int t_id);
+	bool heatMapCreated = false;
 public:
 	Grid();
 	~Grid();
+	void createHeatMap(Cell* t_startCell, Cell* t_endpoint);
 	void setIntraversable();
 	void setNeighbours(Cell* t_cell);
 	void selectStartEndPos(sf::RenderWindow& t_window);
