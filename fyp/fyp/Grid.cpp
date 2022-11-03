@@ -17,6 +17,33 @@ Grid::~Grid()
 {
 }
 
+void Grid::setIntraversable()
+{
+	
+	
+	int random;
+	Cell* tempNode;
+	std::srand(std::time(nullptr));
+	
+	for (int i = 0; i < 300; i++)
+	{
+		random = rand() % (2499 + 1);
+		tempNode = atIndex(random);
+		tempNode->setTraversable(false);
+		if (tempNode->getTraversable() == false)
+		{
+			random = rand() % (2499 + 1);
+			tempNode = atIndex(random);
+			tempNode->setTraversable(false);
+		}
+		
+		
+		std::cout << std::to_string(random) << std::endl;
+	}
+
+		
+}
+
 void Grid::setNeighbours(Cell* t_cell)
 {
 	int row = t_cell->xPos;
@@ -31,7 +58,7 @@ void Grid::setNeighbours(Cell* t_cell)
 		// Check the bounds:
 		if (n_row >= 0 && n_row < MAX_ROWS && n_col >= 0 && n_col < MAX_COLS) {
 
-			int id = n_row + (n_col * MAX_ROWS);
+			int id = n_row + (n_col * MAX_ROWS);// this is for the total number of rows you want in your grid i.e 50x50 or a 10x10
 			t_cell->setNeighbours(atIndex(id));
 			
 		}
@@ -117,8 +144,10 @@ void Grid::setupGrid()
 	}
 	m_theTableVector;
 	int i = 0;
-
-
+	
+		setIntraversable();
+	
+	
 }
 
 void Grid::render(sf::RenderWindow& t_window)

@@ -15,41 +15,41 @@ class Cell
 	double m_Gcost;
 	bool m_traversable = true;
 	int m_costDistance;
-	int prevNeighbour;
+	
 	bool m_marked = false;
 	bool m_isEndoint = false;
 	bool m_isStartoint = false;
 public:
 	int rectXPos;
 	int rectYPos;
-	bool getEndPoint();
+	bool &getEndPoint();
 	void setEndPoint( bool t_et);
 	void setStartPoint( bool t_st);
 
-	bool getStartPoint();
-	bool getMarked();
+	bool &getStartPoint();
+	bool &getMarked();
 	void setMarked(bool t_marked);
 	
 	void setStartColour();
 	void setEndColour();
 
-	int getCostDistance();
+	int &getCostDistance();
 	void setCostDistance(int t_cost);
 
-	int getID();
+	int &getID();
 
 	void setTraversable(bool t_traversable);
-	bool getTraversable();
+	bool &getTraversable();
 
 	void setID(int t_id);
 
 	void setPos(sf::Vector2f t_pos);
 
-	double getHcost();
-	double getFcost();
-	double getGcost();
-	sf::Vector2f getPos();
-	sf::RectangleShape getRect();
+	double &getHcost();
+	double &getFcost();
+	double &getGcost();
+	sf::Vector2f &getPos();
+	sf::RectangleShape &getRect();
 	void initRect();
 
 

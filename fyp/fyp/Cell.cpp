@@ -7,7 +7,7 @@ void Cell::setStartColour()
 
 
 
-bool Cell::getMarked()
+bool &Cell::getMarked()
 {
     return m_marked;
 }
@@ -26,7 +26,7 @@ void Cell::setEndColour()
 
 
 
-int Cell::getCostDistance()
+int &Cell::getCostDistance()
 {
     return m_costDistance;
 }
@@ -36,17 +36,17 @@ void Cell::setCostDistance(int t_cost)
     m_costDistance = t_cost;
 }
 
-bool Cell::getEndPoint()
+bool &Cell::getEndPoint()
 {
     return m_isEndoint;
 }
 
-int Cell::getID()
+int &Cell::getID()
 {
     return m_ID;
 }
 
-bool Cell::getStartPoint()
+bool &Cell::getStartPoint()
 {
     return m_isStartoint;
 }
@@ -59,7 +59,9 @@ void Cell::setEndPoint(bool t_)
 
 void Cell::setTraversable(bool t_traversable)
 {
+    m_rect.setFillColor(sf::Color::Red);
     m_traversable = t_traversable;
+  
 }
 
 void Cell::setStartPoint(bool t_et)
@@ -68,7 +70,7 @@ void Cell::setStartPoint(bool t_et)
     std::cout << "start point set" << std::endl;
 }
 
-bool Cell::getTraversable()
+bool &Cell::getTraversable()
 {
     return m_traversable;
 }
@@ -83,27 +85,27 @@ void Cell::setPos(sf::Vector2f t_pos)
     m_rect.setPosition(t_pos);
 }
 
-double Cell::getHcost()
+double &Cell::getHcost()
 {
     return m_Hcost;
 }
 
-double Cell::getFcost()
+double &Cell::getFcost()
 {
     return m_Fcost;
 }
 
-double Cell::getGcost()
+double& Cell::getGcost()
 {
     return m_Gcost;
 }
 
-sf::Vector2f Cell::getPos()
+sf::Vector2f &Cell::getPos()
 {
     return m_pos;
 }
 
-sf::RectangleShape Cell::getRect()
+sf::RectangleShape &Cell::getRect()
 {
     return m_rect;
 }

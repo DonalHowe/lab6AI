@@ -23,6 +23,7 @@ class Grid
 public:
 	Grid();
 	~Grid();
+	void setIntraversable();
 	void setNeighbours(Cell* t_cell);
 	void selectStartEndPos(sf::RenderWindow& t_window);
 	void setupGrid();
