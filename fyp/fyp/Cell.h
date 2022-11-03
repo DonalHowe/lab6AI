@@ -20,6 +20,8 @@ class Cell
 	bool m_isEndoint = false;
 	bool m_isStartoint = false;
 public:
+	int rectXPos;
+	int rectYPos;
 	bool getEndPoint();
 	void setEndPoint( bool t_et);
 	void setStartPoint( bool t_st);

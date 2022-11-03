@@ -118,6 +118,6 @@ void Cell::initRect()
 
 void Cell::setNeighbours(Cell* t_neighbour)
 {
-    t_neighbour->setEndColour();
+  
     m_neighbour.push_back(t_neighbour);
 }

@@ -10,8 +10,9 @@ using namespace std;
 
 class Grid
 {
-	
+	Cell sampleCell;
 	std::vector<Cell> m_GridVec;
+	std::vector<std::vector<Cell>> m_theTableVector;
 	const int MAX_CELLS=2500;
 	bool m_startPosChosen = false;
 	bool m_endPosChosen = false;
