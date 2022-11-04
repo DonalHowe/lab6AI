@@ -39,14 +39,22 @@ void Grid::createHeatMap(Cell* t_startCell, Cell* t_endpoint)
 		v->setCostDistance(num + 1);
 	}*/
 
-
+	
+	int r=140;
+	int g=100;
+	int b=20;
+	
 	for (int i = 0; i < MAX_CELLS; i++)
 	{
 		 v= atIndex(i);
 		if (v->getTraversable() == true)
 		{
-			
+			r++;
+			g++;
+			b++;
+			sf::Color color(r, g, b);
 			v->setCostDistance((abs(t_endpoint->xPos - v->xPos) + abs(t_endpoint->yPos - v->yPos)));
+			v->setColor(color);
 		}
 		else {
 			v->setCostDistance(999);

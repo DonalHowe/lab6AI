@@ -36,6 +36,11 @@ void Cell::setCostDistance(int t_cost)
     m_costDistance = t_cost;
 }
 
+void Cell::setColor(sf::Color t_color)
+{
+    m_rect.setFillColor(t_color);
+}
+
 bool &Cell::getEndPoint()
 {
     return m_isEndoint;

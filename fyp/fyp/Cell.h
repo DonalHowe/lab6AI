@@ -21,6 +21,7 @@ class Cell
 	bool m_isStartoint = false;
 	std::queue<Cell*> m_neighbour;
 public:
+	void setColor(sf::Color t_color);
 	int rectXPos;
 	int rectYPos;
 	bool &getEndPoint();
