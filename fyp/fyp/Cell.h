@@ -2,7 +2,7 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "ScreenSize.h"
-
+#include <queue>
 class Cell
 {
 
@@ -19,6 +19,7 @@ class Cell
 	bool m_marked = false;
 	bool m_isEndoint = false;
 	bool m_isStartoint = false;
+	std::queue<Cell*> m_neighbour;
 public:
 	int rectXPos;
 	int rectYPos;
@@ -57,8 +58,8 @@ public:
 	int xPos;
 	int yPos;
 
-
-	std::vector<Cell*> m_neighbour;
+	std::queue<Cell*>& getNeighbours();
+	
 	void setNeighbours(Cell* t_neighbour);
 
 };

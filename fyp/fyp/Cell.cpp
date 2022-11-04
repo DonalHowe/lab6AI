@@ -21,7 +21,7 @@ void Cell::setMarked(bool t_marked)
 
 void Cell::setEndColour()
 {
-    m_rect.setFillColor(sf::Color::Black);
+    m_rect.setFillColor(sf::Color::Green);
 }
 
 
@@ -118,8 +118,13 @@ void Cell::initRect()
     m_rect.setSize(sf::Vector2f{ ScreenSize::M_WIDTH / 50,ScreenSize::M_HEIGHT / 50 });
 }
 
+std::queue<Cell*>& Cell::getNeighbours()
+{
+    return m_neighbour;
+}
+
 void Cell::setNeighbours(Cell* t_neighbour)
 {
   
-    m_neighbour.push_back(t_neighbour);
+    m_neighbour.push(t_neighbour);
 }

@@ -13,11 +13,12 @@ class Grid
 	Cell sampleCell;
 	std::vector<Cell> m_GridVec;
 	std::vector<std::vector<Cell>> m_theTableVector;
-	const int MAX_CELLS=2500;
+	static const int MAX_CELLS=2500;
 	bool m_startPosChosen = false;
 	bool m_endPosChosen = false;
 	const static int MAX_ROWS=50;
 	const static int MAX_COLS=50;
+
 	int endId;
 	int startId;
 	Cell *atIndex(int t_id);
@@ -32,6 +33,8 @@ public:
 	void setupGrid();
 	void render(sf::RenderWindow & t_window);
 	void update(sf::Time & t_deltatime);
+	void setUpCellIDNumText(sf::Font& m_font);
+	sf::Text gridNum[MAX_CELLS];
 
 };
 

@@ -1,5 +1,15 @@
 #include "Grid.h"
 
+void Grid::setUpCellIDNumText(sf::Font& m_font)
+{
+	for (int i = 0; i < MAX_CELLS; i++)
+	{
+		gridNum[i].setFont(m_font);
+		gridNum[i].setScale(.5, .5);
+		gridNum[i].setFillColor(sf::Color::Black);
+	}
+}
+
 Cell* Grid::atIndex(int t_id)
 {
 	int x = t_id % MAX_ROWS;
@@ -19,34 +29,57 @@ Grid::~Grid()
 
 void Grid::createHeatMap(Cell* t_startCell, Cell* t_endpoint)
 {
+	int  num;
+	Cell* v = t_endpoint;
+	v->setCostDistance(0);
+	/*num = 0;
+	while (v->getNeighbours().size() != 0 &&v->getNeighbours().front()->getMarked()==false)
+	{
+		v = v->getNeighbours().front();
+		v->setCostDistance(num + 1);
+	}*/
+
+
 	for (int i = 0; i < MAX_CELLS; i++)
 	{
-		Cell* v = atIndex(i);
-		v->setCostDistance((abs(t_endpoint->xPos - v->xPos) + abs(t_endpoint->yPos - v->yPos)));
+		 v= atIndex(i);
+		if (v->getTraversable() == true)
+		{
+			
+			v->setCostDistance((abs(t_endpoint->xPos - v->xPos) + abs(t_endpoint->yPos - v->yPos)));
+		}
+		else {
+			v->setCostDistance(999);
+		}
+	
+		num = v->getCostDistance();
+		gridNum[i].setPosition(v->getRect().getPosition().x, v->getRect().getPosition().y);
+		gridNum[i].setString(std::to_string(num));
 	}
+	
 	m_theTableVector;
 	heatMapCreated = true;
 }
 
 void Grid::setIntraversable()
 {
-	//int random;
-	//Cell* tempNode;
-	//std::srand(std::time(nullptr));
-	//
-	//for (int i = 0; i < 300; i++)
-	//{
-	//	random = rand() % (2499 + 1);
-	//	tempNode = atIndex(random);
-	//	tempNode->setTraversable(false);
-	//	if (tempNode->getTraversable() == false)
-	//	{
-	//		random = rand() % (2499 + 1);
-	//		tempNode = atIndex(random);
-	//		tempNode->setTraversable(false);
-	//	}
-	//	
-	//}
+	int random;
+	Cell* tempNode;
+	std::srand(std::time(nullptr));
+	
+	for (int i = 0; i < 300; i++)
+	{
+		random = rand() % (2499 + 1);
+		tempNode = atIndex(random);
+		tempNode->setTraversable(false);
+		if (tempNode->getTraversable() == false)
+		{
+			random = rand() % (2499 + 1);
+			tempNode = atIndex(random);
+			tempNode->setTraversable(false);
+		}
+		
+	}
 
 		
 }
@@ -152,6 +185,7 @@ void Grid::setupGrid()
 			pos.x = 0;
 		}
 		tempNode.setID(x + (y * MAX_ROWS));
+		
 		m_theTableVector.at(x).push_back(tempNode);
 	}
 
@@ -178,6 +212,10 @@ void Grid::render(sf::RenderWindow& t_window)
 		{
 			t_window.draw(m_theTableVector.at(j).at(i).getRect());
 		}
+	}
+	for (int i = 0; i < MAX_CELLS; i++)
+	{
+		t_window.draw(gridNum[i]);
 	}
 }
 

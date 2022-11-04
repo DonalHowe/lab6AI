@@ -5,13 +5,18 @@
 Game::Game() :
 	m_window{ sf::VideoMode{ ScreenSize::M_WIDTH, ScreenSize::M_HEIGHT, 32U }, "Ai Labs" }, m_exitGame{ false }
 {
-
+	if (!m_font.loadFromFile("BebasNeue.otf"))
+	{
+		std::string s("Error loading font");
+		throw std::exception(s.c_str());
+	}
+	m_grid.setUpCellIDNumText(m_font);
 }
 
 
 Game::~Game()
 {
-
+	
 }
 
 

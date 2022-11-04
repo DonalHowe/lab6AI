@@ -20,7 +20,7 @@ private:
 	void processKeys(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
 	void render();
-
+	sf::Font m_font;
 
 	sf::RenderWindow m_window; 
 
