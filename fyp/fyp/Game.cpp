@@ -11,6 +11,9 @@ Game::Game() :
 		throw std::exception(s.c_str());
 	}
 	m_grid.setUpCellIDNumText(m_font);
+	m_player.setFillColor(sf::Color::Cyan);
+	m_player.setRadius(10u);
+	
 }
 
 
@@ -72,6 +75,36 @@ void Game::update(sf::Time t_deltaTime)
 {
 	m_grid.update(t_deltaTime);
 	m_grid.selectStartEndPos(m_window);
+	if (m_grid.pathFound = true&&sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+	{
+		while (m_grid.m_stack.size()!=0)
+		{
+		
+			if (m_player.getPosition().x < m_grid.m_stack.top()->getRect().getPosition().x)
+			{
+				m_player.move(0.5, 0);
+			}
+			else 	if (m_player.getPosition().x > m_grid.m_stack.top()->getRect().getPosition().x)
+			{
+				m_player.move(-0.5, 0);
+			}
+			if (m_player.getPosition().y < m_grid.m_stack.top()->getRect().getPosition().y)
+			{
+				m_player.move(0, 0.5);
+			}
+			else if (m_player.getPosition().y > m_grid.m_stack.top()->getRect().getPosition().y)
+			{
+				m_player.move(0, -0.5);
+			}
+			else if (m_player.getPosition() == m_grid.m_stack.top()->getRect().getPosition())
+			{
+				m_grid.m_stack.pop();
+			}
+			
+		}
+		
+	}
+
 }
 
 
@@ -79,7 +112,7 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 	m_grid.render(m_window);
-	
+	m_window.draw(m_player);
 
 	m_window.display();
 }

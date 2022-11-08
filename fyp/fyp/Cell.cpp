@@ -123,7 +123,28 @@ void Cell::initRect()
     m_rect.setSize(sf::Vector2f{ ScreenSize::M_WIDTH / 50,ScreenSize::M_HEIGHT / 50 });
 }
 
-std::queue<Cell*>& Cell::getNeighbours()
+Cell*& Cell::GetPrev()
+{
+    return prev;
+}
+
+
+int& Cell::getWeight()
+{
+    return m_weight;
+}
+
+void Cell::setWeight(int t_weight)
+{
+     m_weight=t_weight;
+}
+
+void Cell::setPrev(Cell* t_prev)
+{
+    prev = t_prev;
+}
+
+std::vector<Cell*>& Cell::getNeighbours()
 {
     return m_neighbour;
 }
@@ -131,5 +152,5 @@ std::queue<Cell*>& Cell::getNeighbours()
 void Cell::setNeighbours(Cell* t_neighbour)
 {
   
-    m_neighbour.push(t_neighbour);
+    m_neighbour.push_back(t_neighbour);
 }

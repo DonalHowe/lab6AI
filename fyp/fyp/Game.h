@@ -15,7 +15,7 @@ public:
 	
 	Grid m_grid;
 private:
-
+	sf::CircleShape m_player;
 	void processEvents();
 	void processKeys(sf::Event t_event);
 	void update(sf::Time t_deltaTime);

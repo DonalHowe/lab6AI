@@ -5,11 +5,16 @@
 #include "ScreenSize.h"
 #include "Cell.h"
 #include <vector>
+#include <list>
+#include<iterator>
+#include <queue>
+#include <stack>
 using namespace std;
 
 
 class Grid
 {
+	
 	Cell sampleCell;
 	std::vector<Cell> m_GridVec;
 	std::vector<std::vector<Cell>> m_theTableVector;
@@ -18,15 +23,17 @@ class Grid
 	bool m_endPosChosen = false;
 	const static int MAX_ROWS=50;
 	const static int MAX_COLS=50;
-
+	bool m_goalFound = false;
 	int endId;
 	int startId;
 	Cell *atIndex(int t_id);
 	bool heatMapCreated = false;
 public:
+	bool pathFound = false;
 	Grid();
 	~Grid();
-	void createHeatMap(Cell* t_startCell, Cell* t_endpoint);
+	std::stack<Cell*> m_stack;
+	 std::stack<Cell*>createHeatMap(Cell* t_startCell, Cell* t_endpoint);
 	void setIntraversable();
 	void setNeighbours(Cell* t_cell);
 	void selectStartEndPos(sf::RenderWindow& t_window);
@@ -35,6 +42,8 @@ public:
 	void update(sf::Time & t_deltatime);
 	void setUpCellIDNumText(sf::Font& m_font);
 	sf::Text gridNum[MAX_CELLS];
+
+	void Pathfinding(Cell * t_start,Cell* t_end);
 
 };
 

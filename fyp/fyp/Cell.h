@@ -2,7 +2,7 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "ScreenSize.h"
-#include <queue>
+#include <list>
 class Cell
 {
 
@@ -15,11 +15,12 @@ class Cell
 	double m_Gcost;
 	bool m_traversable = true;
 	int m_costDistance;
-	
+	Cell* prev;
 	bool m_marked = false;
 	bool m_isEndoint = false;
 	bool m_isStartoint = false;
-	std::queue<Cell*> m_neighbour;
+	std::vector<Cell*> m_neighbour;
+	int m_weight;
 public:
 	void setColor(sf::Color t_color);
 	int rectXPos;
@@ -54,12 +55,16 @@ public:
 	sf::RectangleShape &getRect();
 	void initRect();
 
+	void setWeight(int t_weight);
+	int &getWeight();
 
+	Cell*& GetPrev();
+	void setPrev(Cell* t_prev);
 
 	int xPos;
 	int yPos;
 
-	std::queue<Cell*>& getNeighbours();
+	std::vector<Cell*>& getNeighbours();
 	
 	void setNeighbours(Cell* t_neighbour);
 
