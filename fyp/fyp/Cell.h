@@ -16,12 +16,21 @@ class Cell
 	double m_Gcost;
 	bool m_traversable = true;
 	int m_costDistance;
+<<<<<<< HEAD
 	int m_wieght;
 	bool m_marked = false;
 	bool m_isEndoint = false;
 	bool m_isStartoint = false;
 	std::list<Cell*> m_neighbour;
 	
+=======
+	Cell* prev;
+	bool m_marked = false;
+	bool m_isEndoint = false;
+	bool m_isStartoint = false;
+	std::vector<Cell*> m_neighbour;
+	int m_weight;
+>>>>>>> 901465b07b61d5715a3d0220967967b02093d36c
 public:
 	void setColor(sf::Color t_color);
 	int rectXPos;
@@ -65,12 +74,20 @@ public:
 	sf::RectangleShape &getRect();
 	void initRect();
 
+	void setWeight(int t_weight);
+	int &getWeight();
 
+	Cell*& GetPrev();
+	void setPrev(Cell* t_prev);
 
 	int xPos;
 	int yPos;
 
+<<<<<<< HEAD
 	std::list<Cell*>& getNeighbours();
+=======
+	std::vector<Cell*>& getNeighbours();
+>>>>>>> 901465b07b61d5715a3d0220967967b02093d36c
 	
 	void setNeighbours(Cell* t_neighbour);
 

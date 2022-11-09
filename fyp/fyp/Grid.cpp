@@ -1,11 +1,15 @@
 #include "Grid.h"
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 901465b07b61d5715a3d0220967967b02093d36c
 class CostDistanceValueComparer
 {
 
 public:
 
+<<<<<<< HEAD
 
 	
 
@@ -21,6 +25,14 @@ public:
 };
 
 
+=======
+	bool operator()(Cell* t_n1, Cell* t_n2) const
+	{
+		return (t_n1->getCostDistance() > t_n2->getCostDistance());
+	}
+};
+
+>>>>>>> 901465b07b61d5715a3d0220967967b02093d36c
 void Grid::setUpCellIDNumText(sf::Font& m_font)
 {
 	for (int i = 0; i < MAX_CELLS; i++)
@@ -31,6 +43,7 @@ void Grid::setUpCellIDNumText(sf::Font& m_font)
 	}
 }
 
+<<<<<<< HEAD
 std::stack<Cell*> Grid::aStar(Cell* t_start, Cell* t_end)
 {
 	m_path.clear();
@@ -122,6 +135,49 @@ void Grid::generateVertexArrays(Cell* t_endpoint)
 }
 
 
+=======
+//void Grid::Pathfinding(Cell* t_start, Cell* t_end)
+//{
+//	std::priority_queue<Cell*> pq;
+//	int infinity = std::numeric_limits<int>::max() / 10;
+//	for (int i = 0; i < MAX_CELLS; i++)
+//	{
+//		Cell* v = atIndex(i);
+//		v->setCostDistance(infinity);
+//		v->setPrev(nullptr);
+//	}
+//	
+//	pq.push(t_start);
+//	pq.top()->setCostDistance(0);
+//			
+//	while (pq.size()!=0&&m_goalFound==false)
+//	{
+//		Cell* topnode = pq.top();
+//		for (Cell* q : topnode->getNeighbours())
+//		{
+//			Cell* child = q;
+//			if (child != pq.top()->GetPrev()) {
+//
+//
+//				Cell* child = q;
+//				int tempDistance = q->getCostDistance();// this line is what messes it up
+//				if (tempDistance < t_end->getCostDistance() && child->getTraversable() == false)
+//				{
+//					child->setCostDistance(tempDistance);
+//					child->setPrev(pq.top());
+//					std::cout << "goal found" << std::endl;
+//					q->setMarked(true);
+//				}
+//				else {
+//					pq.push(child);
+//					q->setMarked(true);
+//				}
+//			}
+//		}
+//	}
+//
+//}
+>>>>>>> 901465b07b61d5715a3d0220967967b02093d36c
 
 Cell* Grid::atIndex(int t_id)
 {
@@ -140,6 +196,7 @@ Grid::~Grid()
 {
 }
 
+<<<<<<< HEAD
 void Grid::createHeatMap(Cell* t_startCell, Cell* t_endpoint)
 {
 
@@ -175,6 +232,103 @@ void Grid::createHeatMap(Cell* t_startCell, Cell* t_endpoint)
 	m_theTableVector;
 	generateVertexArrays(t_endpoint);
 	aStar(t_startCell, t_endpoint);
+=======
+std::stack<Cell*> Grid::createHeatMap(Cell* t_startCell, Cell* t_endpoint)
+{	
+	
+	
+	std::vector<int> t_path;
+	t_path.clear();
+	
+
+
+	int infinity = std::numeric_limits<int>::max() / 10;
+
+		for (int i = 0; i < MAX_CELLS; i++)
+		{
+			Cell* v = atIndex(i);
+			v->setCostDistance(infinity);
+			v->setPrev(nullptr);
+			v->setWeight(10);
+		}
+		std::priority_queue<Cell*, std::vector<Cell*>, CostDistanceValueComparer> pq;
+		t_startCell->getCostDistance() = 0;
+		pq.push(t_startCell);
+		pq.top()->setMarked(true);
+	
+
+		while (pq.size() != 0 && pq.top() != t_endpoint)
+		{
+			Cell* topnode = pq.top();
+			
+			for (Cell* q : topnode->getNeighbours())
+			{
+				
+				Cell* child = q;
+
+				if (child != pq.top()->GetPrev())
+				{
+					int Weight = q->getWeight();
+					int distanceToChild = (Weight + pq.top()->getCostDistance());
+
+					if (distanceToChild < child->getCostDistance()&&child->getTraversable()==true)
+					{
+						child->getCostDistance() = distanceToChild;
+						child->setPrev(pq.top());
+						
+						
+						if (child == t_endpoint)
+						{
+							std::cout << "found the endpoint" << std::endl;
+						}
+					}
+					 if (child->getMarked() == false)
+					{
+						pq.push(child);
+						child->setMarked(true);
+					}
+				}
+			}
+
+			pq.pop();
+
+		}
+		Cell *pathNode = t_endpoint;
+		while (pathNode->GetPrev() != nullptr)
+		{
+			t_path.push_back(pathNode->getID());
+			pathNode = pathNode->GetPrev();
+			pathNode->setEndColour();
+			m_stack.push(pathNode);
+			
+		}
+		pathFound = true;
+		return m_stack;
+		
+
+		std::cout << "dsfasdfasd" << std::endl;
+	/*for (int i = 0; i < MAX_CELLS; i++)
+	{
+		v=atIndex(i);
+		if (v->getTraversable() == true)
+		{
+			
+			v->setCostDistance((abs(t_endpoint->xPos - v->xPos) + abs(t_endpoint->yPos - v->yPos)));	
+			num = v->getCostDistance();
+		}
+		else {
+			v->setCostDistance(999);
+		}
+	
+		num = v->getCostDistance();
+		gridNum[i].setPosition(v->getRect().getPosition().x, v->getRect().getPosition().y);
+		gridNum[i].setString(std::to_string(num));
+	}*/
+	
+	m_theTableVector;
+	heatMapCreated = true;
+	//Pathfinding(t_startCell, t_endpoint);
+>>>>>>> 901465b07b61d5715a3d0220967967b02093d36c
 }
 
 void Grid::setIntraversable()
@@ -183,7 +337,7 @@ void Grid::setIntraversable()
 	Cell* tempNode;
 	std::srand(std::time(nullptr));
 	
-	for (int i = 0; i < 300; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		random = rand() % (2499 + 1);
 		tempNode = atIndex(random);
@@ -255,7 +409,11 @@ void Grid::selectStartEndPos(sf::RenderWindow & t_window)
 						m_theTableVector.at(i).at(j).setEndColour();
 						m_theTableVector.at(i).at(j).setEndPoint(true);
 						endId = m_theTableVector.at(i).at(j).getID();
-						m_endPosChosen = true;
+						
+							m_endPosChosen = true;
+						
+						
+						
 					}
 
 				}
