@@ -192,32 +192,7 @@ void Cell::initRect()
     m_vertex = v;
 }
 
-<<<<<<< HEAD
 std::list<Cell*>& Cell::getNeighbours()
-=======
-Cell*& Cell::GetPrev()
-{
-    return prev;
-}
-
-
-int& Cell::getWeight()
-{
-    return m_weight;
-}
-
-void Cell::setWeight(int t_weight)
-{
-     m_weight=t_weight;
-}
-
-void Cell::setPrev(Cell* t_prev)
-{
-    prev = t_prev;
-}
-
-std::vector<Cell*>& Cell::getNeighbours()
->>>>>>> 901465b07b61d5715a3d0220967967b02093d36c
 {
     return m_neighbour;
 }
