@@ -1,5 +1,26 @@
 #include "Grid.h"
 
+
+class CostDistanceValueComparer
+{
+
+public:
+
+
+	
+
+
+
+
+		bool operator()(Cell* t_n1, Cell* t_n2) const
+		{
+			return (t_n1->getGcost() + t_n1->getCostDistance()) > (t_n2->getGcost() + t_n2->getCostDistance());
+		}
+	
+
+};
+
+
 void Grid::setUpCellIDNumText(sf::Font& m_font)
 {
 	for (int i = 0; i < MAX_CELLS; i++)
@@ -9,6 +30,98 @@ void Grid::setUpCellIDNumText(sf::Font& m_font)
 		gridNum[i].setFillColor(sf::Color::Black);
 	}
 }
+
+std::stack<Cell*> Grid::aStar(Cell* t_start, Cell* t_end)
+{
+	m_path.clear();
+
+	m_stack.empty();
+	Cell* start = t_start;
+	Cell* goal = t_end;
+	std::priority_queue<Cell*, std::vector<Cell*>, CostDistanceValueComparer > pq;
+	int infinity = std::numeric_limits<int>::max() / 10;
+
+
+	for (int i = 0; i < MAX_CELLS; i++)
+	{
+		Cell* v = atIndex(i);
+	
+		v->setPrev(nullptr);
+	
+		v->setMarked(false);
+		v->setGcost( infinity);
+		v->setWieght(10);
+
+
+	}
+
+	int i = 0;
+
+	start->setGcost(0);
+	
+	pq.push(start);
+
+	pq.top()->setMarked(true);
+
+	while (pq.size() != 0 && pq.top() != goal)
+	{
+
+
+		Cell* topnode = pq.top();
+
+		for (Cell* q : topnode->getNeighbours())
+		{
+
+			Cell* child = q;
+			if (child != pq.top()->GetPrev())
+			{
+
+				int weight = child->getWeight();
+
+				int distanceToChild = pq.top()->getGcost() + weight;
+
+
+				if (distanceToChild < child->getGcost() && child->getTraversable() == true)
+				{
+					child->setGcost( distanceToChild);
+					child->setPrev(pq.top());
+
+
+				}
+				if (child->getMarked() == false)
+				{
+					pq.push(child);
+					child->setMarked(true);
+				}
+			}
+		}
+
+		pq.pop();
+	}
+	Cell* pathNode = t_end;
+	while (pathNode->GetPrev() != nullptr)
+	{
+		m_path.push_back(pathNode->getID());
+		pathNode = pathNode->GetPrev();
+		pathNode->setEndColour();
+		m_stack.push(pathNode);
+	}
+
+	return m_stack;
+
+}
+void Grid::generateVertexArrays(Cell* t_endpoint)
+{
+	for (int i = 0; i < MAX_ROWS; i++)
+	{
+		for (int k = 0; k < MAX_COLS; k++)
+		{
+			m_theTableVector.at(i).at(k).setVectorDistance(t_endpoint->getRect().getPosition());
+		}
+	}
+}
+
+
 
 Cell* Grid::atIndex(int t_id)
 {
@@ -29,44 +142,39 @@ Grid::~Grid()
 
 void Grid::createHeatMap(Cell* t_startCell, Cell* t_endpoint)
 {
-	int  num;
-	Cell* v = t_endpoint;
-	v->setCostDistance(0);
-	/*num = 0;
-	while (v->getNeighbours().size() != 0 &&v->getNeighbours().front()->getMarked()==false)
-	{
-		v = v->getNeighbours().front();
-		v->setCostDistance(num + 1);
-	}*/
 
-	
-	int r=140;
-	int g=100;
-	int b=20;
-	
-	for (int i = 0; i < MAX_CELLS; i++)
+	//clearMarks();
+	t_endpoint->setMarked(true);
+	t_endpoint->setCostDistance(0);
+	std::queue<Cell*> queue;
+	Cell* sourceNode = t_endpoint;
+	queue.push(sourceNode);
+
+	while (!queue.empty())
 	{
-		 v= atIndex(i);
-		if (v->getTraversable() == true)
+		Cell* v = queue.front();
+
+		for (Cell* x : v->getNeighbours())
 		{
-			r++;
-			g++;
-			b++;
-			sf::Color color(r, g, b);
-			v->setCostDistance((abs(t_endpoint->xPos - v->xPos) + abs(t_endpoint->yPos - v->yPos)));
-			v->setColor(color);
+			if (x->getMarked()==false && x->getTraversable()==true)
+			{
+				queue.push(x);
+				x->setCostDistance(v->getCostDistance() + 1);
+				if (x != t_startCell)
+				{
+					x->getRect().setFillColor(sf::Color(0, 255, 255, 255 / x->getCostDistance()));
+					gridNum[x->getID()].setPosition(x->getRect().getPosition().x, x->getRect().getPosition().y);
+					gridNum[x->getID()].setString(std::to_string(x->getCostDistance()));
+				}
+				x->setMarked(true);
+			}
 		}
-		else {
-			v->setCostDistance(999);
-		}
-	
-		num = v->getCostDistance();
-		gridNum[i].setPosition(v->getRect().getPosition().x, v->getRect().getPosition().y);
-		gridNum[i].setString(std::to_string(num));
+		queue.pop();
 	}
-	
+
 	m_theTableVector;
-	heatMapCreated = true;
+	generateVertexArrays(t_endpoint);
+	aStar(t_startCell, t_endpoint);
 }
 
 void Grid::setIntraversable()
@@ -219,6 +327,7 @@ void Grid::render(sf::RenderWindow& t_window)
 		for (int j = 0; j < MAX_COLS; j++)
 		{
 			t_window.draw(m_theTableVector.at(j).at(i).getRect());
+			t_window.draw(m_theTableVector.at(j).at(i).m_vertex);
 		}
 	}
 	for (int i = 0; i < MAX_CELLS; i++)

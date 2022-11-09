@@ -11,6 +11,8 @@ Game::Game() :
 		throw std::exception(s.c_str());
 	}
 	m_grid.setUpCellIDNumText(m_font);
+	m_player.setFillColor(sf::Color::Black);
+	m_player.setRadius(10u);
 }
 
 
@@ -72,6 +74,8 @@ void Game::update(sf::Time t_deltaTime)
 {
 	m_grid.update(t_deltaTime);
 	m_grid.selectStartEndPos(m_window);
+
+	
 }
 
 
@@ -79,7 +83,7 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 	m_grid.render(m_window);
-	
+	m_window.draw(m_player);
 
 	m_window.display();
 }

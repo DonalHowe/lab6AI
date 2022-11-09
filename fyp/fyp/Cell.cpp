@@ -12,12 +12,64 @@ bool &Cell::getMarked()
     return m_marked;
 }
 
+void Cell::setVectorDistance(sf::Vector2f t_goalPosition)
+{
+   
+    if (getTraversable()==true)
+    {
+        float lCost = std::numeric_limits<float>::max();
+
+        sf::Vector2f position = sf::Vector2f(getRect().getPosition().x + 12.5f, getRect().getPosition().y + 12.5f);
+        sf::Vector2f neighbourPosition;
+
+        m_vertex[0].position = position;
+
+        for (Cell* n : m_neighbour)
+        {
+            float currentCost = n->getWeight();
+            currentCost *= 100;
+
+            neighbourPosition = sf::Vector2f(n->getRect().getPosition().x + 12.5f, n->getRect().getPosition().y + 12.5f);
+
+            sf::Vector2f v = (neighbourPosition - t_goalPosition);
+            float mag = (v.x * v.x) + (v.y * v.y);
+
+            currentCost += mag;
+
+            if (currentCost < lCost)
+            {
+                lCost = currentCost;
+                m_vertex[1].position = neighbourPosition;
+                setPrev(n);
+            }
+        }
+    }
+
+
+}
+
 
 void Cell::setMarked(bool t_marked)
 {
     m_marked = t_marked;
 }
 
+void Cell::setWieght(int t_w)
+{
+    m_wieght = t_w;
+}
+
+
+int Cell::getWeight()
+{
+    return m_wieght;
+}
+
+
+void Cell::setGcost(int t_gcost)
+{
+    m_Gcost = t_gcost;
+}
 
 void Cell::setEndColour()
 {
@@ -50,6 +102,17 @@ int &Cell::getID()
 {
     return m_ID;
 }
+
+Cell* Cell::GetPrev()
+{
+    return prev;
+}
+
+void Cell::setPrev(Cell* t_prev)
+{
+    prev = t_prev;
+}
+
 
 bool &Cell::getStartPoint()
 {
@@ -121,9 +184,15 @@ void Cell::initRect()
     m_rect.setOutlineColor(sf::Color::Black);
     m_rect.setOutlineThickness(1.5f);
     m_rect.setSize(sf::Vector2f{ ScreenSize::M_WIDTH / 50,ScreenSize::M_HEIGHT / 50 });
+
+    sf::VertexArray v(sf::Lines, 2);
+    
+    v[0].color = sf::Color::Black;
+    v[1].color = sf::Color::Black;
+    m_vertex = v;
 }
 
-std::queue<Cell*>& Cell::getNeighbours()
+std::list<Cell*>& Cell::getNeighbours()
 {
     return m_neighbour;
 }
@@ -131,5 +200,5 @@ std::queue<Cell*>& Cell::getNeighbours()
 void Cell::setNeighbours(Cell* t_neighbour)
 {
   
-    m_neighbour.push(t_neighbour);
+    m_neighbour.push_back(t_neighbour);
 }

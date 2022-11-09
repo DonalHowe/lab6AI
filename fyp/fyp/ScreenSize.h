@@ -3,6 +3,6 @@
 
 struct ScreenSize{
 
-	static const int M_HEIGHT = 900;
-	static const int M_WIDTH = 900;
+	static const int M_HEIGHT = 2000;
+	static const int M_WIDTH = 2000;
 };
