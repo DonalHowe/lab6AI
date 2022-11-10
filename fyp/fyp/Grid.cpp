@@ -162,7 +162,7 @@ void Grid::createHeatMap(Cell* t_startCell, Cell* t_endpoint)
 				x->setCostDistance(v->getCostDistance() + 1);
 				if (x != t_startCell)
 				{
-					x->getRect().setFillColor(sf::Color(0, 255, 255, 255 / x->getCostDistance()));
+					x->getRect().setFillColor(sf::Color(100, 0, 255, 255 - ((x->getCostDistance())*4)));
 					gridNum[x->getID()].setPosition(x->getRect().getPosition().x, x->getRect().getPosition().y);
 					gridNum[x->getID()].setString(std::to_string(x->getCostDistance()));
 				}
