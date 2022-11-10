@@ -13,12 +13,14 @@ using namespace std;
 
 class Grid
 {
+	void reset();
 	Cell sampleCell;
 	std::vector<Cell> m_GridVec;
 	std::vector<std::vector<Cell>> m_theTableVector;
 	static const int MAX_CELLS=2500;
 	bool m_startPosChosen = false;
 	bool m_endPosChosen = false;
+	bool m_reset = false;
 	const static int MAX_ROWS=50;
 	const static int MAX_COLS=50;
 

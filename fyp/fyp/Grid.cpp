@@ -99,13 +99,45 @@ std::stack<Cell*> Grid::aStar(Cell* t_start, Cell* t_end)
 		pq.pop();
 	}
 	Cell* pathNode = t_end;
-	while (pathNode->GetPrev() != nullptr)
+	while (pathNode->GetPrev() != nullptr&& m_reset==false)
 	{
 		m_path.push_back(pathNode->getID());
 		pathNode = pathNode->GetPrev();
-		pathNode->setEndColour();
+	
 		m_stack.push(pathNode);
 	}
+
+	if (m_reset == false)
+	{
+		
+		for (int i = 0; i < m_stack.size(); i++)
+		{
+
+			Cell * m = m = m_stack.top();
+			
+			m->setEndColour();
+			m_stack.pop();
+			m = t_start;
+			m->setStartColour();
+			m = t_end;
+			m->setEndColour();
+		}
+	
+	}
+	if (m_reset == true)
+	{
+		m_stack.empty();
+		for (int i = 0; i < m_stack.size(); i++)
+		{
+
+			Cell* m = m = m_stack.top();
+
+			m->getRect().setFillColor(sf::Color(100, 0, 255, 255 - ((m->getCostDistance()) * 4)));
+			m_stack.pop();
+		}
+		
+	}
+	
 
 	return m_stack;
 
@@ -122,6 +154,14 @@ void Grid::generateVertexArrays(Cell* t_endpoint)
 }
 
 
+
+void Grid::reset()
+{
+	 heatMapCreated = false;
+	  m_startPosChosen = false;
+	  m_endPosChosen = false;
+	  m_reset = true;
+}
 
 Cell* Grid::atIndex(int t_id)
 {
@@ -338,5 +378,12 @@ void Grid::render(sf::RenderWindow& t_window)
 
 void Grid::update(sf::Time& t_deltatime)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	{
+		reset();
+	}
+	else {
+		m_reset = false;
+	}
 	
 }
