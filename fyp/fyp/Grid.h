@@ -21,19 +21,21 @@ class Grid
 	bool m_startPosChosen = false;
 	bool m_endPosChosen = false;
 	bool m_reset = false;
-	bool pathfound = false;
+
 	const static int MAX_ROWS=50;
 	const static int MAX_COLS=50;
 
 	std::vector<int> m_path;
 	int endId;
 	int startId;
-	Cell *atIndex(int t_id);
+	
 	bool heatMapCreated = false;
 
 	void generateVertexArrays(Cell* t_endpoint);
 public:
 	Grid();
+	Cell* atIndex(int t_id);
+	Cell ptrCell;
 	~Grid();
 	std::stack<Cell*> m_stack;
 	void createHeatMap(Cell* t_startCell, Cell* t_endpoint);
@@ -46,6 +48,8 @@ public:
 	void setUpCellIDNumText(sf::Font& m_font);
 	std::stack<Cell*> aStar(Cell* t_start,Cell* t_end);
 	sf::Text gridNum[MAX_CELLS];
+
+	bool pathfound = false;
 
 };
 

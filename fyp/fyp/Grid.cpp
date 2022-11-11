@@ -286,6 +286,7 @@ void Grid::selectStartEndPos(sf::RenderWindow & t_window)
 						m_theTableVector.at(i).at(j).setStartColour();
 						m_theTableVector.at(i).at(j).setStartPoint(true);
 						startId=	m_theTableVector.at(i).at(j).getID();
+						ptrCell = m_theTableVector.at(i).at(j);
 						m_startPosChosen = true;
 
 					}

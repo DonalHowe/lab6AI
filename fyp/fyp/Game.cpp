@@ -59,6 +59,40 @@ void Game::processEvents()
 	}
 }
 
+void Game::movement()
+{
+
+	
+	for (int i = 0; i < m_grid.m_stack.size(); i++)
+	{
+		
+		if (m_player.getPosition().x > m_grid.m_stack.top()->getRect().getPosition().x)
+		{
+			m_player.move(-1, 0);
+		}
+
+
+		if (m_player.getPosition().x < m_grid.m_stack.top()->getRect().getPosition().x)
+		{
+			m_player.move(1, 0);
+		}
+
+
+		if (m_player.getPosition().y > m_grid.m_stack.top()->getRect().getPosition().y)
+		{
+			m_player.move(0, -1);
+		}
+
+
+		if (m_player.getPosition().y < m_grid.m_stack.top()->getRect().getPosition().y)
+		{
+			m_player.move(0, 1);
+		}
+		
+	}
+	
+}
+
 
 
 void Game::processKeys(sf::Event t_event)
@@ -74,7 +108,10 @@ void Game::update(sf::Time t_deltaTime)
 {
 	m_grid.update(t_deltaTime);
 	m_grid.selectStartEndPos(m_window);
-
+	if (m_grid.pathfound == true)
+	{
+		movement();
+	}
 	
 }
 
