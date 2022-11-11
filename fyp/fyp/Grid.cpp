@@ -85,7 +85,10 @@ std::stack<Cell*> Grid::aStar(Cell* t_start, Cell* t_end)
 				{
 					child->setGcost( distanceToChild);
 					child->setPrev(pq.top());
-
+					if (child == t_end)
+					{
+						pathfound = true;
+					}
 
 				}
 				if (child->getMarked() == false)
@@ -161,6 +164,7 @@ void Grid::reset()
 	  m_startPosChosen = false;
 	  m_endPosChosen = false;
 	  m_reset = true;
+	  pathfound = false;
 }
 
 Cell* Grid::atIndex(int t_id)
@@ -378,12 +382,15 @@ void Grid::render(sf::RenderWindow& t_window)
 
 void Grid::update(sf::Time& t_deltatime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	if (pathfound == true)
 	{
-		reset();
-	}
-	else {
-		m_reset = false;
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			reset();
+		}
+		else {
+			m_reset = false;
+		}
 	}
 	
 }

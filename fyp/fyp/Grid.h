@@ -21,6 +21,7 @@ class Grid
 	bool m_startPosChosen = false;
 	bool m_endPosChosen = false;
 	bool m_reset = false;
+	bool pathfound = false;
 	const static int MAX_ROWS=50;
 	const static int MAX_COLS=50;
 
